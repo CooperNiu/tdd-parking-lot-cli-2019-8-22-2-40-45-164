@@ -1,5 +1,8 @@
 package com.oocl.cultivation;
 
+
+import sun.security.krb5.internal.Ticket;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -18,18 +21,19 @@ public class ParkingLot {
     }
 
     public ParkingTicket storeCar(Car car){
-        ParkingTicket parkingTicket = new ParkingTicket(createTicketID());
-        cars.put(parkingTicket, car);
+        ParkingTicket parkingTicket = new ParkingTicket(createTicketID(), this);
+        this.cars.put(parkingTicket, car);
         return parkingTicket;
     }
 
     public Car pickCar(ParkingTicket ticket){
-        cars.remove(ticket);
-        return cars.get(ticket);
+        Car car = this.cars.get(ticket);
+        this.cars.remove(ticket);
+        return car;
     }
 
-    public boolean isParkingLotHasCar(ParkingTicket ticket){
-        return cars.containsKey(ticket);
+    public boolean isParkingLotContainsCar(ParkingTicket ticket){
+        return this.cars.containsKey(ticket);
     }
 
     private static String createTicketID()
@@ -41,8 +45,8 @@ public class ParkingLot {
         return ticketID;
     }
 
-    public int getAvailablePosition() {
-        return capacity - cars.size();
+    public int getAvailableParkingPosition() {
+        return cars.size() - capacity;
     }
 }
 

@@ -1,33 +1,54 @@
 package com.oocl.cultivation;
 
+import java.util.ArrayList;
+
 public class ParkingBoy {
+    protected final ArrayList<ParkingLot> parkingLots;
+    protected String lastErrorMessage;
 
-    private final ParkingLot parkingLot;
-    private String lastErrorMessage;
+    public ParkingBoy(ArrayList<ParkingLot> parkingLots)
+    {
+        this.parkingLots = parkingLots;
+    }
 
-    public ParkingBoy(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+    public ParkingLot pickParkingLot(){
+        if (parkingLots.size() == 1){
+            return parkingLots.get(0).getAvailableParkingPosition() > 0 ? parkingLots.get(0) : null;
+        }
+        else {
+            for (ParkingLot parkingLot : parkingLots)
+            {
+                if (parkingLot.getAvailableParkingPosition() > 0)
+                {
+                    return parkingLot;
+                }
+            }
+            return null;
+        }
     }
 
     public ParkingTicket park(Car car) {
-        int availablePos = parkingLot.getAvailablePosition();
-        if (availablePos > 0) {
+        ParkingLot availableParkingLot = pickParkingLot();
+        if (availableParkingLot != null) {
             lastErrorMessage = null;
-            return this.parkingLot.storeCar(car);
+            return availableParkingLot.storeCar(car);
         }else{
-            lastErrorMessage = "";
+            lastErrorMessage = "The parking lot is full.";
             return null;
         }
     }
 
     public Car fetch(ParkingTicket ticket) {
-        if (parkingLot.isParkingLotHasCar(ticket))
+        if (ticket != null)
         {
-            lastErrorMessage = null;
-        }
-        else{
-            lastErrorMessage = "Unrecognised parking ticket.";
-
+            if (ticket.getParkingLot() != null && ticket.getParkingLot().isParkingLotContainsCar(ticket)) {
+                ParkingLot parkingLot = ticket.getParkingLot();
+                lastErrorMessage = null;
+                return this.parkingLots.pickCar(ticket);
+            }
+            else{
+                lastErrorMessage = "Unrecognized parking ticket.";
+            }
         }
         return null;
     }
