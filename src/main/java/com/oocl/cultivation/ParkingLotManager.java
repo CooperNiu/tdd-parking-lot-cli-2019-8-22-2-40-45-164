@@ -7,7 +7,6 @@ public class ParkingLotManager {
     ArrayList<ParkingBoy> parkingBoys;
 
     public ParkingLotManager(ArrayList<ParkingLot> parkingLots, ArrayList<ParkingBoy> parkingBoys) {
-//        super(parkingLots);
         this.parkingBoys = parkingBoys;
     }
 
