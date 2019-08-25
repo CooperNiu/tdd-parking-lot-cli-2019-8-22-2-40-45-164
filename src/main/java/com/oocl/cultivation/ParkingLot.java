@@ -1,8 +1,5 @@
 package com.oocl.cultivation;
 
-import gherkin.lexer.Pa;
-import sun.security.krb5.internal.Ticket;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -31,7 +28,7 @@ public class ParkingLot {
         return cars.get(ticket);
     }
 
-    public boolean isParkingLotHasCar(Ticket ticket){
+    public boolean isParkingLotHasCar(ParkingTicket ticket){
         return cars.containsKey(ticket);
     }
 
@@ -45,7 +42,6 @@ public class ParkingLot {
     }
 
     public int getAvailablePosition() {
-        return cars.size() - capacity;
         return capacity - cars.size();
     }
 }

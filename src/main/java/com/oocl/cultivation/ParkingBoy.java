@@ -10,11 +10,26 @@ public class ParkingBoy {
     }
 
     public ParkingTicket park(Car car) {
-    	return parkingLot.parkCar(car);
+        int availablePos = parkingLot.getAvailablePosition();
+        if (availablePos > 0) {
+            lastErrorMessage = null;
+            return this.parkingLot.storeCar(car);
+        }else{
+            lastErrorMessage = "";
+            return null;
+        }
     }
 
     public Car fetch(ParkingTicket ticket) {
-        return parkingLot.pickCar(ticket);
+        if (parkingLot.isParkingLotHasCar(ticket))
+        {
+            lastErrorMessage = null;
+        }
+        else{
+            lastErrorMessage = "Unrecognised parking ticket.";
+
+        }
+        return null;
     }
 
     public String getLastErrorMessage() {
