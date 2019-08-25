@@ -1,6 +1,5 @@
 package com.oocl.cultivation;
 
-
 import sun.security.krb5.internal.Ticket;
 
 import java.util.HashMap;
@@ -43,6 +42,15 @@ public class ParkingLot {
         id = String.format("%6s", id).replace(' ', '0');
         String ticketID = prefix + id;
         return ticketID;
+    }
+
+    public double getCurrentParkingSpace()
+    {
+        if (capacity - cars.size() == 0)
+        {
+            return 0;
+        }
+        return (capacity - cars.size()) / (capacity * 1.0);
     }
 
     public int getAvailableParkingPosition() {

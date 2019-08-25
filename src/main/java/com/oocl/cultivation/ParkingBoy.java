@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class ParkingBoy {
     protected final ArrayList<ParkingLot> parkingLots;
     protected String lastErrorMessage;
-
     public ParkingBoy(ArrayList<ParkingLot> parkingLots)
     {
         this.parkingLots = parkingLots;
@@ -44,7 +43,7 @@ public class ParkingBoy {
             if (ticket.getParkingLot() != null && ticket.getParkingLot().isParkingLotContainsCar(ticket)) {
                 ParkingLot parkingLot = ticket.getParkingLot();
                 lastErrorMessage = null;
-                return this.parkingLots.pickCar(ticket);
+                return parkingLot.pickCar(ticket);
             }
             else{
                 lastErrorMessage = "Unrecognized parking ticket.";
